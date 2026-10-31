@@ -18,10 +18,17 @@ jobs:
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
       - name: Instalar dependencias
         run: npm install
+
+      - name: Adicionar plataforma Android (se nao existir)
+        run: |
+          if [ ! -d android ]; then
+            npm install @capacitor/android
+            npx cap add android
+          fi
 
       - name: Sincronizar Capacitor
         run: npx cap sync android
